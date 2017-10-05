@@ -1,6 +1,7 @@
 # -*- coding: cp1252 -*-
 
 from core import *
+import collections
 import os
 import json
 import csv
@@ -9,8 +10,65 @@ def FeatureExtraction(JSONFilename):
     dic = jsonToDictionary(JSONFilename)
     #print dic['attribute']
     #AssignedID(dic)
-    CountWordsDescription(dic)
+    getDescriptionFromSERPS(dic)
+    #getValueinDic(dic, 'description')
+    #countWordDescription(dic)
     
+
+## PLUGINS Count Words
+
+def countWords(word):
+    NumberWord = len(word.split())
+    return NumberWord
+    
+#get VALUE in DIC
+def getValueinDic(dic, query):
+    keylist = []
+    dicDesc={}
+    for key in dic:
+        if isElementaSERP(key):
+            keylist.append(key)
+    #print keylist
+
+    for elem in keylist:
+        dicDesc[elem] = dic[elem][query]
+    #print dicDesc
+    return dicDesc 
+
+    
+#get Description of SERP
+def getDescriptionFromSERPS(dic):    
+    keylist = []
+    dicDesc = collections.defaultdict(dict)
+    #dicDesc={}
+    for key in dic: #
+        if isElementaSERP(key):
+            keylist.append(key)
+    #print keylist
+    
+    for elem in keylist:
+        dicDesc[elem]['description']= dic[elem]['description']
+    print dicDesc
+    return dicDesc
+
+def countWordDescription(dic):
+    keylist = []
+    dicCount={}
+    for key in dic:
+        if isElementaSERP(key):
+            keylist.append(key)
+    for elem in keylist:
+        count = countWords(dic[elem]['description'])
+        dicCount[elem] = count
+
+    print dicCount        
+    return dicCount
+
+    
+    
+
+
+
 ## PLUGINS Set correlative ID
 '''
 def AssignedID(dic):
@@ -23,16 +81,7 @@ def AssignedID(dic):
             dic['id'] = countID
     
      #   dic[key]['id']=countID
-'''
-
-
-## PLUGINS Count Words
-
-def CountWord(string):
-    numberWord= len(string.split())
-    return numberWord
-    
-    
+'''       
 """    
 def CountWordsDescription(dic):
     for key in dic:
@@ -42,23 +91,21 @@ def CountWordsDescription(dic):
             for key_atr in dic[key]:
                 print dic[key_atr]
                 
- """   
+ """        
 
-def CountWordsDescription(dic):
-    #print dic['SERP3']['description']
+'''
+def findWordsDescription(dic):    
     keylist = []
     for key in dic:
-        keylist.append(key)
-    #print keylist
+        if isElementaSERP(key):
+            keylist.append(key)
+    print keylist
 
     for elem in keylist:
         print dic[elem]['description']
 
-        #for keya in dic[key]:
-        #    print dic.get('description')
-    
-    
-    
+
+ '''   
     
 def main():
     currentDir = os.getcwd()

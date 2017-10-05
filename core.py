@@ -27,3 +27,9 @@ def DictionaryToJson(dic):
     print dic
     with open ('data.json', 'w') as fp:
         json.dump(dic, fp)
+
+def isElementaSERP(string):
+    if "SERP" in string:
+        return True
+    else:
+        return False
