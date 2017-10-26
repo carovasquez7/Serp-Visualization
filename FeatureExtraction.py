@@ -11,32 +11,30 @@ def FeatureExtraction(JSONFilename):
     #print dic['attribute']
     #AssignedID(dic)
     getDescriptionFromSERPS(dic)
-    #getValueinDic(dic, 'description')
-    #countWordDescription(dic)
-    
-
+    getValueinDic(dic, 'description')
+    print countWordDescription(dic,'numberWord')
+   
 ## PLUGINS Count Words
 
 def countWords(word):
     NumberWord = len(word.split())
     return NumberWord
     
-#get VALUE in DIC
+#get VALUE in DIC (Obtiene los valores de la llave que se le entrega.)
 def getValueinDic(dic, query):
     keylist = []
     dicDesc={}
     for key in dic:
         if isElementaSERP(key):
             keylist.append(key)
-    #print keylist
-
+    
     for elem in keylist:
         dicDesc[elem] = dic[elem][query]
-    #print dicDesc
+    
     return dicDesc 
 
     
-#get Description of SERP
+#get Description of SERP (Obtiene los valores de la llave Description)
 def getDescriptionFromSERPS(dic):    
     keylist = []
     dicDesc = collections.defaultdict(dict)
@@ -44,24 +42,32 @@ def getDescriptionFromSERPS(dic):
     for key in dic: #
         if isElementaSERP(key):
             keylist.append(key)
-    #print keylist
-    
+        
     for elem in keylist:
         dicDesc[elem]['description']= dic[elem]['description']
-    print dicDesc
+    
     return dicDesc
 
-def countWordDescription(dic):
+# Count word of Description (Calcula el numero de palabras del atributo Description)
+def countWordDescription(dic,name):
     keylist = []
     dicCount={}
+    dicAux={}
+    dicAux = makeDicAux(dic)
     for key in dic:
         if isElementaSERP(key):
             keylist.append(key)
     for elem in keylist:
         count = countWords(dic[elem]['description'])
-        dicCount[elem] = count
+        dicCount = insertNewKeytoDic(dic,name,count,elem)
 
-    print dicCount        
+    listAtr = []
+    for elemAtrb in dicAux['attribute']:
+        listAtr.append(elemAtrb)
+    listAtr.append(name)        
+    dicCount['info']=dicAux['info']    
+    dicCount['attribute']=listAtr
+
     return dicCount
 
     
@@ -113,7 +119,7 @@ def main():
         if ".json" in filename:
             FeatureExtraction(filename)
         else:
-            print "[INFO] " + str(filename) + " cant be process because is not a .json"
+            print "[INFO] " + str(filename) + " cant be process because is not a .json\n"
 
 if __name__ == "__main__":
     main()
