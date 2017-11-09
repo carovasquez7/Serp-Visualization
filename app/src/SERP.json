@@ -3,7 +3,7 @@
     "id": "123",
     "totalserps": "3"
   },
-  "Results1": {
+  "SERP1": {
     "href": "http://en.wikipedia.org/wiki/Hurricane_Irene_(2011)",
     "blog_posts": false,
     "indented": 0,
@@ -20,7 +20,7 @@
     "image": false
   },
 
-  "Results2": {
+  "SERP2": {
     "href": "http://www.wunderground.com/hurricane/at201109.asp",
     "blog_posts": false,
     "indented": 0,
@@ -38,7 +38,7 @@
 
   },
 
-  "Results3": {
+  "SERP3": {
     "href": "http://www.nytimes.com/2011/08/29/nyregion/wind-and-rain-from-hurricane-irene-lash-new-york.html?pagewanted=all",
     "blog_posts": false,
     "indented": 0,
@@ -56,8 +56,8 @@
 
 
   },
-  "Results4": {
-    "href" "http://www.google.com/search?q=hurricane+irene&hl=en&gl=us&prmd=ivnsu&source=univ&tbm=nws&tbo=u&sa=X&ei=vNZnTqHaD6HJ0AGD3PT1Cw&ved=0CEMQqAI",
+  "SERP4": {
+    "href": "http://www.google.com/search?q=hurricane+irene&hl=en&gl=us&prmd=ivnsu&source=univ&tbm=nws&tbo=u&sa=X&ei=vNZnTqHaD6HJ0AGD3PT1Cw&ved=0CEMQqAI",
     "blog_posts": false,
     "indented": 0,
     "title": "News for hurricane irene",
