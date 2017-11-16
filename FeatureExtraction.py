@@ -6,73 +6,79 @@ import os
 import json
 import csv
 
+
 def FeatureExtraction(JSONFilename):
     dic = jsonToDictionary(JSONFilename)
+    #print dic
     #print dic['attribute']
-    #AssignedID(dic)
-    getDescriptionFromSERPS(dic)
-    getValueinDic(dic, 'description')
-    print countWordDescription(dic,'numberWord')
-   
+    #getValueinDic(dic, 'description')
+    dicFinal = countWordDescription(dic, 'numberWord')
+    DictionaryToJson(dicFinal)
+
+
 ## PLUGINS Count Words
+
 
 def countWords(word):
     NumberWord = len(word.split())
     return NumberWord
-    
+
+
 #get VALUE in DIC (Obtiene los valores de la llave que se le entrega.)
 def getValueinDic(dic, query):
     keylist = []
-    dicDesc={}
+    dicDesc = {}
     for key in dic:
-        if isElementaSERP(key):
+        if isElementaResults(key):
             keylist.append(key)
-    
+
     for elem in keylist:
         dicDesc[elem] = dic[elem][query]
-    
-    return dicDesc 
 
-    
+    return dicDesc
+
+
 #get Description of SERP (Obtiene los valores de la llave Description)
-def getDescriptionFromSERPS(dic):    
+def getDescriptionFromSERPS(dic):
     keylist = []
     dicDesc = collections.defaultdict(dict)
     #dicDesc={}
-    for key in dic: #
-        if isElementaSERP(key):
+    for key in dic:  #
+        if isElementaResults(key):
             keylist.append(key)
-        
+
     for elem in keylist:
-        dicDesc[elem]['description']= dic[elem]['description']
-    
+        dicDesc[elem]['description'] = dic[elem]['description']
+
     return dicDesc
 
-# Count word of Description (Calcula el numero de palabras del atributo Description)
-def countWordDescription(dic,name):
+
+# Count word of Description (Calcula el numero de palabras de algu  atributo que tenga palabras (Description, snippet, etc))
+def countWordDescription(dic, name, queryname):
     keylist = []
-    dicCount={}
-    dicAux={}
+    dicCount = {}
+    dicAux = {}
     dicAux = makeDicAux(dic)
+
     for key in dic:
-        if isElementaSERP(key):
+        if isElementaResults(key):
             keylist.append(key)
     for elem in keylist:
-        count = countWords(dic[elem]['description'])
-        dicCount = insertNewKeytoDic(dic,name,count,elem)
+        count = countWords(dic[elem][queryname])
+        dicCount = insertNewKeytoDic(dic, name, count, elem)
 
     listAtr = []
     for elemAtrb in dicAux['attribute']:
         listAtr.append(elemAtrb)
-    listAtr.append(name)        
-    dicCount['info']=dicAux['info']    
-    dicCount['attribute']=listAtr
+    listAtr.append(name)
+    dicCount['info'] = dicAux['info']
+    dicCount['attribute'] = listAtr
 
+    #print dicCount
     return dicCount
 
-    
-    
-
+    #print dicAux
+    #return dicAux
 
 
 ## PLUGINS Set correlative ID
@@ -87,7 +93,7 @@ def AssignedID(dic):
             dic['id'] = countID
     
      #   dic[key]['id']=countID
-'''       
+'''
 """    
 def CountWordsDescription(dic):
     for key in dic:
@@ -97,8 +103,7 @@ def CountWordsDescription(dic):
             for key_atr in dic[key]:
                 print dic[key_atr]
                 
- """        
-
+ """
 '''
 def findWordsDescription(dic):    
     keylist = []
@@ -111,23 +116,15 @@ def findWordsDescription(dic):
         print dic[elem]['description']
 
 
- '''   
-    
+ '''
+
+
 def main():
     currentDir = os.getcwd()
-    for filename in os.listdir(currentDir):
-        if ".json" in filename:
-            FeatureExtraction(filename)
-        else:
-            print "[INFO] " + str(filename) + " cant be process because is not a .json\n"
+    FeatureExtraction("SERP.json")
+
 
 if __name__ == "__main__":
     main()
 
-  
-
 ## PLUGINS Ranking
-
-
-
-
